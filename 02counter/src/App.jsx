@@ -5,22 +5,38 @@ import heroImg from './assets/hero.png'
 import './App.css'
 
 function App() {
+
+
+let  [counter, setCounter] = useState(1)
+
+
+
+
   
-let counter = 2
+// let counter = 1
 
 const AddValue = () =>{
-  console.log("clicked", Math.random())
-  counter = counter+1
+  counter = counter + 1
+  setCounter(counter)
+  console.log("clicked", counter)
 }
+
+const RemoveValue = () =>{
+  counter = counter - 1
+  setCounter(counter)
+  console.log("clicked", counter)
+}
+
   return (
     <>
       
         <h1>chai or react </h1>
         <h2>counter value:{counter}</h2>
 
-        <button onClick={AddValue}>Add value</button>
+        <button onClick={AddValue}>Add value{counter}</button>
         <br />
-        <button>remove value</button>
+        <button onClick={RemoveValue}>remove value{counter}</button>
+        <p>footer:{counter}</p>
     </>
   )
 }
