@@ -1,4 +1,4 @@
-export default function Card({ username, btnText }) {
+export default function Card({ username, btnText="click here " }) {
     console.log(username);
     return (
         <div className="flex items-center justify-center mt-10">
