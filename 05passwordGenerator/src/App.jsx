@@ -1,64 +1,123 @@
-import { useState } from 'react'
-
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
 function App() {
-  const [length, setLength] = useState(8)
-  const [includeUppercase, setIncludeUppercase] = useState(false)
-  const [includeLowercase, setIncludeLowercase] = useState(false)
-  const [includeNumbers, setIncludeNumbers] = useState(false)
-  const [includeSymbols, setIncludeSymbols] = useState(false)
-  // password generation logic will be implemented here
-  const  [password, setPassword] = useState("")
+  const [length, setLength] = useState(8);
+  const [includeUppercase, setIncludeUppercase] = useState(false);
+  const [includeLowercase, setIncludeLowercase] = useState(false);
+  const [includeNumbers, setIncludeNumbers] = useState(false);
+  const [includeSymbols, setIncludeSymbols] = useState(false);
+  const [password, setPassword] = useState("");
 
-  //password gnerator function
-  const genratePassword = (()=>{
-    let pass = ""
-    let string = ""
-    let includeUppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    let includeLowercase = "abcdefghijklmnopqrstuvwxyz"
-    let includeNumbers = "0123456789"
-    let includeSymbols = "!@#$%^&*()-+=_<>?/"
+  // Password Generator
+  const generatePassword = () => {
+    let pass = "";
+    let chars = "";
 
+    const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+    const numberChars = "0123456789";
+    const symbolChars = "!@#$%^&*()-+=_<>?/";
 
-    if(includeUppercase){
-      pass += includeUppercase
-    }
-    if(includeLowercase){
-      pass += includeLowercase
-    }
-    if(includeNumbers){
-      pass += includeNumbers
-    }
-    if(includeSymbols){
-      pass += includeSymbols
-    }
-    
+    if (includeUppercase) chars += uppercaseChars;
+    if (includeLowercase) chars += lowercaseChars;
+    if (includeNumbers) chars += numberChars;
+    if (includeSymbols) chars += symbolChars;
 
-    // Loop
-    for(let i = 1; i < Array.length; i++){
-      let character = Math.floor(Math.random() * pass.length +1) 
-      pass = str.charAt(character)
-
-      setPassword(pass)
+    if (chars === "") {
+      alert("Please select at least one character type.");
+      return;
     }
-  } ,[length, includeUppercase, includeLowercase, includeNumbers , includeSymbols , setPassword])
+
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * chars.length);
+      pass += chars.charAt(randomIndex);
+    }
+
+    setPassword(pass);
+  };
 
   return (
     <>
-    <div className="w-full  max-w-md mx-auto shadow-md rounded-lg px-4 my-8 text-orange-500  bg-gray-700 ">
-      <div className="flex-shadow rounded-lg  overflow-hidden mb-4">
-        <input type="text" 
-        value={password}
-          className="outline-none w-full py-1 px-3 "
-          placeholder="password"
-          readOnly
-          ></input>
+      <div className="w-full max-w-md mx-auto shadow-md rounded-lg px-4 my-8 text-orange-500 bg-gray-700">
+        <h1 className="text-2xl font-bold text-center my-3">
+          Password Generator
+        </h1>
 
+        <div className="rounded-lg overflow-hidden mb-4">
+          <div className="flex">
+            <input
+              type="text"
+              value={password}
+              className="outline-none w-full py-2 px-3 text-black"
+              placeholder="Password"
+              readOnly
+            />
+
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4">
+              Copy
+            </button>
+          </div>
+
+          <div className="flex flex-col gap-2 text-sm mt-4">
+            <div className="flex items-center gap-2">
+              <input
+                type="range"
+                min={6}
+                max={30}
+                value={length}
+                onChange={(e) => setLength(Number(e.target.value))}
+              />
+              <label>Length: {length}</label>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={includeUppercase}
+                onChange={(e) => setIncludeUppercase(e.target.checked)}
+              />
+              <label>Include Uppercase</label>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={includeLowercase}
+                onChange={(e) => setIncludeLowercase(e.target.checked)}
+              />
+              <label>Include Lowercase</label>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={includeNumbers}
+                onChange={(e) => setIncludeNumbers(e.target.checked)}
+              />
+              <label>Include Numbers</label>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={includeSymbols}
+                onChange={(e) => setIncludeSymbols(e.target.checked)}
+              />
+              <label>Include Symbols</label>
+            </div>
+
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+              onClick={generatePassword}
+            >
+              Generate Password
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
