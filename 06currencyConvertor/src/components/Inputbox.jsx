@@ -1,4 +1,4 @@
-import React, {useId} from 'react'
+import React, { useId } from 'react'
 
 
 function InputBox({
@@ -10,11 +10,15 @@ function InputBox({
     selectCurrency = "pkr",
     amountDisable = false,
     currencyDisable = false,
-
-
     className = "",
-}) {
 
+}) 
+
+
+
+
+{
+const amountInputId = useId();
 
     return (
         <div className={`bg-white p-3 rounded-lg text-sm flex ${className} `}>
@@ -51,7 +55,7 @@ function InputBox({
                 </select>
             </div>
         </div>
-    );      
+    );
 }
 
 export default InputBox;
