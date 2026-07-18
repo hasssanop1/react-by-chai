@@ -1,15 +1,16 @@
 import { useState } from 'react'
 import { InputBox } from './components'
 import useCurrencyInfo from './hooks/useCurrencyInfo'
+import { toWords } from "number-to-words";
 
 
 
 function App() {
 
-  const [amount, setAmount] = useState(0)
+  const [amount, setAmount] = useState("")
   const [from, setFrom] = useState("usd")
   const [to, setTo] = useState("pkr")
-  const [convertedAmount, setConvertedAmount] = useState(0)
+  const [convertedAmount, setConvertedAmount] = useState("")
 
   // from comes from:
   // const [from, setFrom] = useState("usd")
@@ -18,12 +19,21 @@ function App() {
   // - from: selected currency (e.g. "usd")
   // - currencyInfo: stores the exchange rates returned by the hook
 
+  const roundedAmount = Math.floor(convertedAmount || 0);
+
 
   // so the data is in json in the form of object so we need just keys not the value of the currency so we will just extract keys
   const currencyInfo = useCurrencyInfo(from)
 
 
   const options = Object.keys(currencyInfo)
+
+// convert amount into words 
+  const amountInWords = toWords(Math.floor(convertedAmount || 0));
+
+// now uppercasing them 
+  const formattedAmountInWords =
+  amountInWords.charAt(0).toUpperCase() + amountInWords.slice(1);
 
   // Adding swap functionality means swapping two variables
   const swap = () => {
@@ -69,7 +79,7 @@ function App() {
               <button
                 type="button"
                 className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-white rounded-md bg-blue-600 text-white px-2 py-0.5"
-              onClick={swap}
+                onClick={swap}
               >
                 swap
               </button>
@@ -77,7 +87,7 @@ function App() {
             <div className="w-full mt-1 mb-4">
               {/* To Box  */}
               <InputBox
-                  label="To"
+                label="To"
                 amount={convertedAmount}
                 currencyOptions={options}
                 onCurrencyChange={(currency) => setTo(currency)}
@@ -88,6 +98,15 @@ function App() {
             </div>
             <button type="submit" className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg">
               Convert {from.toLocaleUpperCase()} to {to.toUpperCase()}
+                
+
+              {convertedAmount !== "" && (
+                <div className="mt-4 p-3 rounded-lg bg-white/20 text-white text-center">
+                  {formattedAmountInWords} {to.toUpperCase()}
+                </div>
+              )}
+
+
             </button>
           </form>
         </div>
