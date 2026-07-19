@@ -3,7 +3,7 @@
 
 
 <!-- Assignment -->
-add hover effect in the footer on home and about complete assignments on time
+add hover effect in the footer on home and about complete assignments on time and we do some other changes
 
 
 <!-- code how to push -->
